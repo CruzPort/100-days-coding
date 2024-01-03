@@ -7,16 +7,15 @@ using namespace std;
 class Solution {
 public:
     std::vector<int> twoSum(std::vector<int>& nums, int target) {
-        std::unordered_map<int, int> numIndexMap;
-
-        for (int i = 0; i < nums.size(); ++i) {
-            int complement = target - nums[i];
-            if (numIndexMap.find(complement) != numIndexMap.end()) {
-                return {numIndexMap[complement], i};
+        int n = nums.size();
+        
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (nums[i] + nums[j] == target) {
+                    return {i, j};
+                }
             }
-            numIndexMap[nums[i]] = i;
-        }
-
+        }   
         return {};
     }
 };
