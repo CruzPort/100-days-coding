@@ -1,45 +1,36 @@
 class Solution {
 public:
+    void createMapping(string& pattern) {
+        char start = 'a';
+        char mapping[130] = {0};
+
+        for (auto ch: pattern) {
+            if (mapping[ch] == 0) {
+                mapping[ch] = start;
+                start++;
+            }
+        }
+
+        // updating the string
+        for (int i=0; i<pattern.length(); i++) {
+            pattern[i] = mapping[pattern[i]];
+        }
+    }
+
     vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
         vector<string> ans;
-      for(string s:words)
-      {
-          map<char,char> mp;
-          set<char> st;
-          map<char,char> mp1;
-          set<char> st1;
-          bool flag=false;
-          if(s.size()!=pattern.size())
-              continue;
-          for(int i=0;i<s.size();i++)
-          {
-              if(st.find(pattern[i])!=st.end())
-              {
-                  if(mp[pattern[i]]!=s[i])
-                  {
-                       flag=true;
-                      break;
-                  }
-              }
-              mp[pattern[i]]=s[i];
-              st.insert(pattern[i]);
-          }
-           for(int i=0;i<s.size();i++)
-          {
-              if(st1.find(s[i])!=st1.end())
-              {
-                  if(mp1[s[i]]!=pattern[i])
-                  {
-                       flag=true;
-                      break;
-                  }
-              }
-              mp1[s[i]]=pattern[i];
-              st1.insert(s[i]);
-          }
-          if(!flag)
-          ans.push_back(s);
-      }
+        createMapping(pattern);
+
+        for (int i=0; i<words.size(); i++) {
+            // storing in a temporary string so that we don't change the actual word
+            string tempStr = words[i];
+            createMapping(tempStr);
+
+            if (tempStr == pattern) {
+                ans.push_back(words[i]);
+            }
+        }
+
         return ans;
     }
 };
