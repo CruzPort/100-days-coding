@@ -11,4 +11,4 @@ public:
         for (auto con : conn) res += con * (cost++);
         return res;
     }
-};s
+};
